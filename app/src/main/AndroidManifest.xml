@@ -116,7 +116,11 @@
             android:value="420c1e82d72e35e48bf2592b" />
 
         <activity android:name=".module.welcome.activity.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".module.welcome.activity.LoginActivity"
@@ -126,11 +130,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".module.welcome.activity.BlankActivity" />
         <activity android:name=".module.framework.activity.MainFrameworkActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>
