@@ -28,12 +28,44 @@
                 android:layout_height="0dp"
                 android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/chat_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_chat" />
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="34dp"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/chat_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_chat" />
+
+                    <!--新消息红点-->
+                    <RelativeLayout
+                        android:id="@+id/chat_red_dot_rl"
+
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/red_point_9dp_bg"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/chat_red_dot_num_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:maxLines="1"
+                            android:text="11"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                    <!--新消息红点-->
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -70,12 +102,44 @@
                 android:layout_height="0dp"
                 android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/contacts_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_contacts" />
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="34dp"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/contacts_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_contacts" />
+
+                    <!--新联系人红点-->
+                    <RelativeLayout
+                        android:id="@+id/contacts_red_dot_rl"
+
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/red_point_9dp_bg"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/contacts_red_dot_num_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:maxLines="1"
+                            android:text="11"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                    <!--新联系人红点-->
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -110,12 +174,55 @@
                 android:layout_height="0dp"
                 android:layout_weight="2">
 
-                <ImageView
-                    android:id="@+id/discovery_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_discovery" />
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="34dp"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/discovery_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_discovery" />
+
+                    <!--新朋友圈红点-->
+                    <View
+                        android:id="@+id/discovery_new_moment_reddot_view"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/red_point_4dp_bg"
+                        android:visibility="gone" />
+                    <!--新朋友圈红点-->
+
+                    <!--新@我红点-->
+                    <RelativeLayout
+                        android:id="@+id/discovery_red_dot_rl"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/red_point_9dp_bg"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/discovery_red_dot_num_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:maxLines="1"
+                            android:text="11"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                    <!--新@我红点-->
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

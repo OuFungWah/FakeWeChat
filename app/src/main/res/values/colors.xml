@@ -13,4 +13,7 @@
     <color name="colorAttentionBlue">#506195</color>
     <color name="colorBottomDivider">#dadada</color>
     <color name="colorBottomTitleText">#999999</color>
+    <color name="colorBackgroundGrey">#ebebeb</color>
+    <color name="colorMineDivider">#d9d9d9</color>
+    <color name="colorNotificationRed">#ff3f3e</color>
 </resources>
