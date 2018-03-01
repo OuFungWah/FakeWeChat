@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/mine_setting_security_ll"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="18dp"
@@ -43,6 +44,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_notification_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -67,6 +69,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_no_disturb_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -91,6 +94,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_chat_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -115,6 +119,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_privacy_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -139,6 +144,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_generation_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -165,6 +171,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_about_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -189,6 +196,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_feedback_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -208,6 +216,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/mine_setting_plugins_ll"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="18dp"
@@ -233,6 +242,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_switch_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"
@@ -257,6 +267,7 @@
                     android:background="@color/colorMineDivider" />
 
                 <LinearLayout
+                    android:id="@+id/mine_setting_logout_ll"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/menu_list_ll_bg"

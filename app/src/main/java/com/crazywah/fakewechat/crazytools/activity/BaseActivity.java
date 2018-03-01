@@ -90,7 +90,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void finishWithAnim(int enterAnim,int outAnim){
         this.finish();
         overridePendingTransition(enterAnim, outAnim);
-
     }
 
 }

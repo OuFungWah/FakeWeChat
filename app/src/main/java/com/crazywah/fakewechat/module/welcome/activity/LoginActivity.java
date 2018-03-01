@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
+import com.crazywah.fakewechat.crazytools.util.SPUtil;
 import com.crazywah.fakewechat.module.framework.activity.MainFrameworkActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -152,8 +153,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Log.d(TAG, "gotResult: response = " + s + ".");
                 if (s.equals("")) {
                     Log.d(TAG, "gotResult: 登陆成功");
-                    startActivity(MainFrameworkActivity.class);
-                    finish();
+                    try {
+                        SPUtil.getInstance("userInfo").putString("username",usernameStr);
+                        SPUtil.getInstance("userInfo").putString("password",usernameStr);
+                        startActivity(MainFrameworkActivity.class);
+                        finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (s.equals("invalid password")) {
                     Log.d(TAG, "gotResult: 密码错误");

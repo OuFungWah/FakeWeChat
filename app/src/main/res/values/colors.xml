@@ -18,4 +18,10 @@
     <color name="colorNotificationRed">#ff3f3e</color>
     <color name="colorActionBarDivider">#2e2d32</color>
     <color name="colorActionBarBtnPressed">#2e2d32</color>
+    <color name="colorDialogText">#636363</color>
+
+    <!--对话框-->
+    <color name="closeDialogStorkColor">#d8d2d4</color>
+    <color name="closeDialogBackground">#45000000</color>
+
 </resources>

@@ -53,6 +53,7 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
+        <service android:name=".module.framework.service.MainService" />
 
         <!-- Required SDK核心功能-->
         <receiver
@@ -116,23 +117,23 @@
             android:value="420c1e82d72e35e48bf2592b" />
 
         <activity android:name=".module.welcome.activity.WelcomeActivity">
-
-        </activity>
-        <activity
-            android:name=".module.welcome.activity.LoginActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".module.welcome.activity.RegisterActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".module.welcome.activity.BlankActivity" />
-        <activity
-            android:name=".module.framework.activity.MainFrameworkActivity"
-            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.welcome.activity.LoginActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".module.welcome.activity.RegisterActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".module.welcome.activity.BlankActivity" />
+        <activity
+            android:name=".module.framework.activity.MainFrameworkActivity"
+            android:launchMode="singleTask">
+
         </activity>
         <activity android:name=".module.fakemine.activity.MineSettingActivity" />
 

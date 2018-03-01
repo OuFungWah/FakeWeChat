@@ -1,5 +1,6 @@
 package com.crazywah.fakewechat.module.framework.activity;
 
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +19,7 @@ import com.crazywah.fakewechat.module.fakecontacts.fragment.ContactsListFragment
 import com.crazywah.fakewechat.module.fakediscovery.fragment.DiscoveryListFragment;
 import com.crazywah.fakewechat.module.fakemine.fragment.MineListFragment;
 import com.crazywah.fakewechat.module.framework.adapter.FrameworkMainAdapter;
+import com.crazywah.fakewechat.module.framework.reciver.MainExitReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,8 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
 
     private ImageView actionBarSearchImg;
     private ImageView actionBarAddImg;
+
+    private MainExitReceiver mainExitReceiver;
 
     private ViewPager viewPager;
 
@@ -96,6 +100,8 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         fragmentList.add(new DiscoveryListFragment());
         fragmentList.add(new MineListFragment());
 
+        mainExitReceiver = new MainExitReceiver();
+
         for (int i = 0; i < fragmentList.size(); i++) {
             Log.d(TAG, "initView: " + i + " : " + titleTvs[i].getText().toString());
         }
@@ -107,6 +113,10 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
     protected void setView() {
         viewPager.setAdapter(fragmentPagerAdapter);
         selectPage(CHAT_PAGE);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.crazywah.action.EXIT_APP");
+        this.registerReceiver(mainExitReceiver,intentFilter);
     }
 
     @Override
