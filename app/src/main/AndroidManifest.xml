@@ -125,13 +125,16 @@
             android:name=".module.welcome.activity.RegisterActivity"
             android:launchMode="singleTop" />
         <activity android:name=".module.welcome.activity.BlankActivity" />
-        <activity android:name=".module.framework.activity.MainFrameworkActivity">
+        <activity
+            android:name=".module.framework.activity.MainFrameworkActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".module.fakemine.activity.MineSettingActivity" />
 
     </application>
 

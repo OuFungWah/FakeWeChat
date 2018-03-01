@@ -26,7 +26,7 @@ import java.util.List;
  * Created by FungWah on 2018/2/28.
  */
 
-public class MainFrameworkActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class MainFrameworkActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, MainCallBack {
 
     private static final String TAG = "MainFrameworkActivity";
 
@@ -162,4 +162,11 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    @Override
+    public void startActivityWithAnim(Class c, int enterAnim, int outAnim) {
+        startActivityWithAnim(c, enterAnim, outAnim);
+    }
+
+
 }
