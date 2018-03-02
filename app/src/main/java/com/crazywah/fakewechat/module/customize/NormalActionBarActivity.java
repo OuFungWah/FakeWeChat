@@ -2,6 +2,7 @@ package com.crazywah.fakewechat.module.customize;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public abstract class NormalActionBarActivity extends BaseActivity {
     protected TextView actionbarTitleTv;
     protected ImageView actionbarFirstIconImg;
     protected ImageView actionbarSecondIconImg;
+    protected Button actionRightBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +28,9 @@ public abstract class NormalActionBarActivity extends BaseActivity {
         actionbarTitleTv = findView(R.id.actionbar_title);
         actionbarFirstIconImg = findView(R.id.actionbar_first_icon_img);
         actionbarSecondIconImg = findView(R.id.actionbar_second_icon_img);
+        actionRightBtn = findView(R.id.actionbar_right_btn);
 
-        defineActionBar(actionbarBackImg, actionbarTitleTv, actionbarFirstIconImg, actionbarSecondIconImg);
+        defineActionBar(actionbarBackImg, actionbarTitleTv, actionbarFirstIconImg, actionbarSecondIconImg,actionRightBtn);
     }
 
     /**
@@ -38,6 +41,6 @@ public abstract class NormalActionBarActivity extends BaseActivity {
      * @param firstIconImg  已绑定的右方第一个按钮的对象
      * @param SecondIconImg 已绑定的右方第二个按钮的对象
      */
-    protected abstract void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg);
+    protected abstract void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg,Button actionRightBtn);
 
 }

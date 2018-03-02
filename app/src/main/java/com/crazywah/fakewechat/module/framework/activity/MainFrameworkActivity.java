@@ -1,5 +1,6 @@
 package com.crazywah.fakewechat.module.framework.activity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
+import com.crazywah.fakewechat.common.AppConfig;
+import com.crazywah.fakewechat.common.callback.OnFragmentUpdateListener;
+import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
 import com.crazywah.fakewechat.crazytools.fragment.BaseFragment;
 import com.crazywah.fakewechat.module.fakechat.fragment.ChatListFragment;
@@ -23,6 +27,9 @@ import com.crazywah.fakewechat.module.framework.reciver.MainExitReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * Created by FungWah on 2018/2/28.
@@ -46,6 +53,7 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
     private ImageView actionBarAddImg;
 
     private MainExitReceiver mainExitReceiver;
+    private InfoUpdateRecevier infoUpdateRecevier;
 
     private ViewPager viewPager;
 
@@ -76,6 +84,7 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
+
         actionBarSearchImg = findView(R.id.actionbar_search);
         actionBarAddImg = findView(R.id.actionbar_add);
         viewPager = findView(R.id.main_viewpager);
@@ -100,7 +109,17 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         fragmentList.add(new DiscoveryListFragment());
         fragmentList.add(new MineListFragment());
 
+        //注册退出App广播接收器
         mainExitReceiver = new MainExitReceiver();
+        IntentFilter mianExitIntentFilter = new IntentFilter();
+        mianExitIntentFilter.addAction(AppConfig.ACTION_EXIT_APP);
+        this.registerReceiver(mainExitReceiver, mianExitIntentFilter);
+
+        //注册信息更新广播接收器
+        infoUpdateRecevier = new InfoUpdateRecevier();
+        IntentFilter infoUpdateIntentFilter = new IntentFilter();
+        infoUpdateIntentFilter.addAction(AppConfig.ACTION_UPDATE_INFO);
+        this.registerReceiver(infoUpdateRecevier, infoUpdateIntentFilter);
 
         for (int i = 0; i < fragmentList.size(); i++) {
             Log.d(TAG, "initView: " + i + " : " + titleTvs[i].getText().toString());
@@ -114,9 +133,6 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         viewPager.setAdapter(fragmentPagerAdapter);
         selectPage(CHAT_PAGE);
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.crazywah.action.EXIT_APP");
-        this.registerReceiver(mainExitReceiver,intentFilter);
     }
 
     @Override
@@ -178,5 +194,15 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         startActivityWithAnim(c, enterAnim, outAnim);
     }
 
+    @Override
+    public void refreshData(Intent intent) {
+        super.refreshData(intent);
+        ((OnFragmentUpdateListener) fragmentList.get(MINE_PAGE)).onFragmentUpdate(intent);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(infoUpdateRecevier);
+    }
 }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="290dp"
+    android:layout_height="170dp"
+    android:background="@drawable/dialog_blank_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="性别"
+        android:textColor="@color/colorText"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="254dp"
+        android:layout_height="85dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/dialog_male_rl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_list_ll_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:text="男"
+                android:textColor="@color/colorText"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/dialog_male_btn"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/wechat_radio_btn_bg"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorMineDivider" />
+
+        <RelativeLayout
+            android:id="@+id/dialog_female_rl"
+            android:layout_width="match_parent"
+
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_list_ll_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:text="女"
+                android:textColor="@color/colorText"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/dialog_female_btn"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/wechat_radio_btn_bg"
+                android:enabled="false" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

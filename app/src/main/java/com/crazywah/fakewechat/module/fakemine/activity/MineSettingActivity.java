@@ -6,11 +6,13 @@ import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
+import com.crazywah.fakewechat.common.AppConfig;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
 import com.crazywah.fakewechat.crazytools.util.SPUtil;
 import com.crazywah.fakewechat.crazytools.util.WindowSizeHelper;
@@ -50,7 +52,7 @@ public class MineSettingActivity extends NormalActionBarActivity implements View
     }
 
     @Override
-    protected void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg) {
+    protected void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg, Button actionbarRightBtn) {
         backIconImg.setOnClickListener(this);
         titleTv.setText("设置");
     }
@@ -143,7 +145,7 @@ public class MineSettingActivity extends NormalActionBarActivity implements View
             case R.id.close_dialog_shutdown_Ll:
                 startActivity(MainFrameworkActivity.class);
                 Intent i = new Intent();
-                i.setAction("com.crazywah.action.EXIT_APP");
+                i.setAction(AppConfig.ACTION_EXIT_APP);
                 sendBroadcast(i);
                 break;
             case R.id.actionbar_back_img:

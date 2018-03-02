@@ -11,6 +11,8 @@ import com.crazywah.fakewechat.module.framework.activity.MainFrameworkActivity;
 import com.crazywah.fakewechat.tools.CrazyWahUtils;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 public class WelcomeActivity extends BaseActivity {
@@ -34,7 +36,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void setView() {
         backgroundImg.setImageResource(R.drawable.splash);
         try {
-            String usernameStr = SPUtil.getInstance("userInfo").getString("username", "");
+            final String usernameStr = SPUtil.getInstance("userInfo").getString("username", "");
             String passwordStr = SPUtil.getInstance("userInfo").getString("password", "");
             if (usernameStr.equals("") || passwordStr.equals("")) {
                 new Thread(new Runnable() {

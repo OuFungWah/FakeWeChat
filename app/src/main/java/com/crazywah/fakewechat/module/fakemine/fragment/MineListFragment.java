@@ -1,17 +1,25 @@
 package com.crazywah.fakewechat.module.fakemine.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
+import com.crazywah.fakewechat.common.callback.OnFragmentUpdateListener;
+import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
 import com.crazywah.fakewechat.crazytools.fragment.BaseFragment;
 import com.crazywah.fakewechat.module.fakemine.activity.MineSettingActivity;
+import com.crazywah.fakewechat.module.fakemine.activity.MineUserInfoActivity;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * Created by FungWah on 2018/2/28.
  */
 
-public class MineListFragment extends BaseFragment implements View.OnClickListener {
+public class MineListFragment extends BaseFragment implements View.OnClickListener, OnFragmentUpdateListener {
 
     private LinearLayout userInfoLl;
     private LinearLayout walletLl;
@@ -21,6 +29,12 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout expressionLl;
     private LinearLayout settingLl;
 
+    private TextView nicknameTv;
+    private TextView usernameTv;
+
+    private UserInfo userInfo;
+
+    private InfoUpdateRecevier infoUpdateRecevier;
 
     @Override
     protected int setLayoutId() {
@@ -29,6 +43,9 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView(View parent) {
+
+        userInfo = JMessageClient.getMyInfo();
+
         userInfoLl = findView(R.id.mine_userinfo_ll);
         walletLl = findView(R.id.mine_wallet_ll);
         favorLl = findView(R.id.mine_favor_ll);
@@ -36,11 +53,18 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
         cardBagLl = findView(R.id.mine_card_bag_ll);
         expressionLl = findView(R.id.mine_expression_ll);
         settingLl = findView(R.id.mine_setting_ll);
+
+        nicknameTv = findView(R.id.mine_nickname_tv);
+        usernameTv = findView(R.id.mine_username_tv);
+
+        infoUpdateRecevier = new InfoUpdateRecevier();
+
     }
 
     @Override
     protected void setView() {
-
+        nicknameTv.setText(userInfo.getNickname());
+        usernameTv.setText(userInfo.getUserName());
     }
 
     @Override
@@ -58,6 +82,8 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_userinfo_ll:
+                startActivity(MineUserInfoActivity.class);
+                getActivity().overridePendingTransition(R.anim.move_in_from_right, R.anim.move_out_from_right);
                 break;
             case R.id.mine_wallet_ll:
                 break;
@@ -71,7 +97,7 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.mine_setting_ll:
                 startActivity(MineSettingActivity.class);
-                getActivity().overridePendingTransition(R.anim.move_in_from_right,R.anim.move_out_from_right);
+                getActivity().overridePendingTransition(R.anim.move_in_from_right, R.anim.move_out_from_right);
                 break;
         }
     }
@@ -79,5 +105,11 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onFragmentUpdate(Intent intent) {
+        userInfo = JMessageClient.getMyInfo();
+        setView();
     }
 }

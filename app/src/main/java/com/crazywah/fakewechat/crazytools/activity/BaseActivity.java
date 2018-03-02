@@ -78,18 +78,26 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 带动画地转跳Activity
+     *
      * @param c
      * @param enterAnim
      * @param outAnim
      */
-    protected void startActivityWithAnim(Class c,int enterAnim,int outAnim) {
+    protected void startActivityWithAnim(Class c, int enterAnim, int outAnim) {
         startActivity(c);
         overridePendingTransition(enterAnim, outAnim);
     }
 
-    protected void finishWithAnim(int enterAnim,int outAnim){
+    protected void finishWithAnim(int enterAnim, int outAnim) {
         this.finish();
         overridePendingTransition(enterAnim, outAnim);
+    }
+
+    /**
+     * 刷新数据用
+     */
+    public void refreshData(Intent intent) {
+
     }
 
 }
