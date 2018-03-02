@@ -1,6 +1,7 @@
 package com.crazywah.fakewechat.module.fakemine.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
 import com.crazywah.fakewechat.crazytools.fragment.BaseFragment;
 import com.crazywah.fakewechat.module.fakemine.activity.MineSettingActivity;
 import com.crazywah.fakewechat.module.fakemine.activity.MineUserInfoActivity;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -29,6 +31,7 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout expressionLl;
     private LinearLayout settingLl;
 
+    private SimpleDraweeView avatarSdv;
     private TextView nicknameTv;
     private TextView usernameTv;
 
@@ -54,6 +57,7 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
         expressionLl = findView(R.id.mine_expression_ll);
         settingLl = findView(R.id.mine_setting_ll);
 
+        avatarSdv = findView(R.id.mine_userinfo_sdv);
         nicknameTv = findView(R.id.mine_nickname_tv);
         usernameTv = findView(R.id.mine_username_tv);
 
@@ -63,6 +67,11 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void setView() {
+        try {
+            avatarSdv.setImageURI(Uri.fromFile(userInfo.getAvatarFile()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         nicknameTv.setText(userInfo.getNickname());
         usernameTv.setText(userInfo.getUserName());
     }

@@ -30,6 +30,9 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -136,7 +139,9 @@
 
         </activity>
         <activity android:name=".module.fakemine.activity.MineSettingActivity" />
-        <activity android:name=".module.fakemine.activity.MineUserInfoActivity" android:launchMode="singleTask" />
+        <activity
+            android:name=".module.fakemine.activity.MineUserInfoActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".module.fakemine.activity.ModifyNickNameActivity" />
 
     </application>

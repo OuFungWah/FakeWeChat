@@ -1,10 +1,19 @@
 package com.crazywah.fakewechat.module.fakemine.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +24,19 @@ import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
 import com.crazywah.fakewechat.common.AppConfig;
+import com.crazywah.fakewechat.crazytools.util.BitmapTools;
+import com.crazywah.fakewechat.crazytools.util.PermissionUtil;
 import com.crazywah.fakewechat.crazytools.util.ToastUtil;
 import com.crazywah.fakewechat.crazytools.util.WindowSizeHelper;
 import com.crazywah.fakewechat.module.customize.NormalActionBarActivity;
 import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
+import com.facebook.common.time.SystemClock;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -29,6 +47,18 @@ import cn.jpush.im.api.BasicCallback;
  */
 
 public class MineUserInfoActivity extends NormalActionBarActivity implements View.OnClickListener {
+
+    private static final String TAG = "MineUserInfoActivity";
+
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int REQUEST_CAPTURE_AND_CROP = 2;
+    private static final int SAVE_BITMAP_AFTER_GRANTED = 3;
+    private static final int AFTER_GET_DATA = 4;
+    private static final int OVER_TIME = 5;
+    private static final int TOKEN_MISTAKE = 6;
+    private static final int SHOW_TOAST = 7;
+
+    private static final int LOAD_LOCAL_URI_COMPLETE = 0;
 
     private UserInfo userInfo;
 
@@ -43,6 +73,8 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
     private TextView genderTv;
     private TextView regionTv;
 
+    private SimpleDraweeView avatarSdv;
+
     private String nicknameStr;
     private String usernameStr;
     private String genderStr;
@@ -56,6 +88,18 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
 
     private Button maleBtn;
     private Button femaleBtn;
+
+    private Dialog avatarDialog;
+    private View avatarDialogView;
+
+    private RelativeLayout takePhotoRl;
+    private RelativeLayout selectPhotoRl;
+
+    private File destination;
+    private Uri imageUri;
+    private Bitmap bitmap;
+
+    private boolean isUploadingAvatar = false;
 
     private BroadcastReceiver updateRecreiver = new BroadcastReceiver() {
         @Override
@@ -86,6 +130,8 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         genderRl = findView(R.id.userinfo_gender_rl);
         addressRl = findView(R.id.userinfo_region_rl);
 
+        avatarSdv = findView(R.id.userinfo_avatar_sdv);
+
         nicknameTv = findView(R.id.userinfo_nickname_tv);
         usernameTv = findView(R.id.userinfo_username_tv);
         genderTv = findView(R.id.userinfo_gender_tv);
@@ -104,10 +150,23 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         maleBtn = genderDialogView.findViewById(R.id.dialog_male_btn);
         femaleBtn = genderDialogView.findViewById(R.id.dialog_female_btn);
 
+        //初始化选择头像的对话框
+        avatarDialog = new Dialog(this, R.style.CloseDialog);
+        avatarDialogView = getLayoutInflater().inflate(R.layout.dialog_avatar, null);
+
+        takePhotoRl = avatarDialogView.findViewById(R.id.avatar_dialog_take_photo_rl);
+        selectPhotoRl = avatarDialogView.findViewById(R.id.avatar_dialog_select_photo_rl);
     }
 
     @Override
     protected void setView() {
+
+        try {
+            avatarSdv.setImageURI(Uri.fromFile(userInfo.getAvatarFile()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         nicknameStr = (!userInfo.getNickname().equals("") ? userInfo.getNickname() : "未设置昵称");
         usernameStr = (!userInfo.getUserName().equals("") ? userInfo.getUserName() : "未设置用户名");
         genderStr = userInfo.getGender() == UserInfo.Gender.male ? "男" : userInfo.getGender() == UserInfo.Gender.female ? "女" : "未知";
@@ -122,6 +181,10 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
 
         maleBtn.setEnabled(userInfo.getGender() == UserInfo.Gender.male);
         femaleBtn.setEnabled(userInfo.getGender() == UserInfo.Gender.female);
+
+        avatarDialog.setContentView(avatarDialogView, new ViewGroup.LayoutParams((int) (1080 * WindowSizeHelper.getHelper().getProporationX()), (int) (300 * WindowSizeHelper.getHelper().getProporationY())));
+        avatarDialog.getWindow().setWindowAnimations(R.style.dialogWindowAnim);
+        avatarDialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
     @Override
@@ -134,15 +197,23 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
 
         maleRl.setOnClickListener(this);
         femaleRl.setOnClickListener(this);
+
+        takePhotoRl.setOnClickListener(this);
+        selectPhotoRl.setOnClickListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        if (genderDialog.isShowing()) {
-            genderDialog.dismiss();
+        if (!isUploadingAvatar) {
+            if (genderDialog.isShowing()) {
+                genderDialog.dismiss();
+            } else {
+                finishWithAnim(R.anim.move_in_from_left, R.anim.move_out_from_left);
+            }
         } else {
-            finishWithAnim(R.anim.move_in_from_left, R.anim.move_out_from_left);
+            ToastUtil.showShort("头像上传中...");
         }
+
     }
 
     @Override
@@ -152,6 +223,11 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
                 onBackPressed();
                 break;
             case R.id.userinfo_avatar_rl:
+                if (!isUploadingAvatar) {
+                    avatarDialog.show();
+                } else {
+                    ToastUtil.showShort("头像上传中...");
+                }
                 break;
             case R.id.userinfo_nickname_rl:
                 startActivityWithAnim(ModifyNickNameActivity.class, R.anim.move_in_from_right, R.anim.move_out_from_right);
@@ -169,6 +245,40 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
                 break;
             case R.id.dialog_female_rl:
                 updateGender(UserInfo.Gender.female);
+                break;
+            case R.id.avatar_dialog_take_photo_rl:
+                //判断是否有权限操作
+                if (PermissionUtil.checkPermission(this, Manifest.permission.CAMERA)) {
+                    if (PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        isUploadingAvatar = true;
+                        takePhoto();
+                    } else {
+                        ToastUtil.showShort("请先授予存储权限");
+                        //获取权限
+                        PermissionUtil.getPermission(this, PermissionUtil.STORAGE_PERMISSION);
+                    }
+                } else {
+                    ToastUtil.showShort("请先授予照相权限");
+                    //获取权限
+                    PermissionUtil.getPermission(this, PermissionUtil.CAMERA_PERMISSION);
+                }
+                break;
+            case R.id.avatar_dialog_select_photo_rl:
+                //判断是否有权限操作
+                if (PermissionUtil.checkPermission(this, Manifest.permission.CAMERA)) {
+                    if (PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        isUploadingAvatar = true;
+                        gotoPickImage();
+                    } else {
+                        ToastUtil.showShort("请先授予存储权限");
+                        //获取权限
+                        PermissionUtil.getPermission(this, PermissionUtil.STORAGE_PERMISSION);
+                    }
+                } else {
+                    ToastUtil.showShort("请先授予照相权限");
+                    //获取权限
+                    PermissionUtil.getPermission(this, PermissionUtil.CAMERA_PERMISSION);
+                }
                 break;
             default:
                 break;
@@ -219,4 +329,90 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         super.onDestroy();
         unregisterReceiver(updateRecreiver);
     }
+
+    private void gotoPickImage() {
+        avatarDialog.dismiss();
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, RESULT_LOAD_IMAGE);
+    }
+
+    protected void takePhoto() {
+        // android 7.0系统解决拍照的问题
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+        }
+        avatarDialog.dismiss();
+        //jpg格式有部分机型不适配
+//        destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SystemClock.get().now() + ".jpg");
+        destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SystemClock.get().now() + ".png");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
+        startActivityForResult(intent, REQUEST_CAPTURE_AND_CROP);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "int requestCode:" + requestCode + "\n int resultCode:" + resultCode + "\n Intent data:" + data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            imageUri = data.getData();
+            try {
+                bitmap = BitmapTools.getBitmapFormUri(this, imageUri);
+                File tempFile = BitmapTools.saveToFile(bitmap, getFilesDir(), userInfo.getUserName());
+                JMessageClient.updateUserAvatar(tempFile, new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        if (s.equals("Success")) {
+                            ToastUtil.showShort("上传头像成功");
+                            Intent updateInfoIntent = new Intent();
+                            updateInfoIntent.setAction(AppConfig.ACTION_UPDATE_INFO);
+                            sendBroadcast(updateInfoIntent);
+                        }
+                        isUploadingAvatar = false;
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            handler.sendEmptyMessage(LOAD_LOCAL_URI_COMPLETE);
+        } else if (requestCode == REQUEST_CAPTURE_AND_CROP && resultCode == RESULT_OK) {
+            //处理相机
+            Log.d(TAG, "接收到相机处理请求");
+            try {
+                imageUri = Uri.fromFile(destination);
+                FileInputStream in = new FileInputStream(destination);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 10;
+                bitmap = BitmapFactory.decodeStream(in, null, options);
+                /**
+                 * 用于预防某些机型会自动旋转图片，所以需要获取图片的旋转信息以把图片重新旋转回来
+                 */
+                if (BitmapTools.getBitmapDegree(destination.getPath()) != 0) {
+                    bitmap = BitmapTools.rotateBitmapByDegree(bitmap, BitmapTools.getBitmapDegree(destination.getPath()));
+                }
+//                handler.sendEmptyMessage(LOAD_LOCAL_URI_COMPLETE);
+                JMessageClient.updateUserAvatar(destination, new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        if (s.equals("Success")) {
+                            ToastUtil.showShort("上传头像成功");
+                            Intent updateInfoIntent = new Intent();
+                            updateInfoIntent.setAction(AppConfig.ACTION_UPDATE_INFO);
+                            sendBroadcast(updateInfoIntent);
+                        }
+                        isUploadingAvatar = false;
+                    }
+                });
+                Log.d(TAG, "拍照处理成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d(TAG, "拍照异常");
+            } finally {
+
+            }
+        }
+    }
+
+
 }

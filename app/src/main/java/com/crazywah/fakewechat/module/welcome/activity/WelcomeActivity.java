@@ -55,6 +55,7 @@ public class WelcomeActivity extends BaseActivity {
                 JMessageClient.login(usernameStr, passwordStr, new BasicCallback() {
                     @Override
                     public void gotResult(int i, String s) {
+                        Log.d(TAG, "gotResult: s" + s);
                         if (s.equals("")) {
                             Log.d(TAG, "gotResult: 登陆成功");
                             try {
@@ -63,7 +64,7 @@ public class WelcomeActivity extends BaseActivity {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }else{
+                        } else {
                             ToastUtil.showShort("登录失败,请检查网络连接");
                             new Thread(new Runnable() {
                                 @Override

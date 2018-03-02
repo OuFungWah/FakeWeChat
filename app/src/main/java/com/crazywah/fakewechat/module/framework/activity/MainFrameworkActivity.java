@@ -203,6 +203,7 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mainExitReceiver);
         unregisterReceiver(infoUpdateRecevier);
     }
 }

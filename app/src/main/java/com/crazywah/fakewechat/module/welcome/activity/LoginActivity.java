@@ -155,7 +155,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     Log.d(TAG, "gotResult: 登陆成功");
                     try {
                         SPUtil.getInstance("userInfo").putString("username",usernameStr);
-                        SPUtil.getInstance("userInfo").putString("password",usernameStr);
+                        SPUtil.getInstance("userInfo").putString("password",passwordStr);
                         startActivity(MainFrameworkActivity.class);
                         finish();
                     } catch (Exception e) {
