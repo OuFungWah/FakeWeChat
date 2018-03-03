@@ -344,9 +344,7 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
             builder.detectFileUriExposure();
         }
         avatarDialog.dismiss();
-        //jpg格式有部分机型不适配
-//        destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SystemClock.get().now() + ".jpg");
-        destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), SystemClock.get().now() + ".png");
+        destination = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "fakeWechatUser:" + userInfo.getUserName() + ".png");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
         startActivityForResult(intent, REQUEST_CAPTURE_AND_CROP);
@@ -380,7 +378,6 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
             //处理相机
             Log.d(TAG, "接收到相机处理请求");
             try {
-                imageUri = Uri.fromFile(destination);
                 FileInputStream in = new FileInputStream(destination);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 10;
@@ -414,5 +411,8 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         }
     }
 
+    private void uploadAvatar(){
+
+    }
 
 }

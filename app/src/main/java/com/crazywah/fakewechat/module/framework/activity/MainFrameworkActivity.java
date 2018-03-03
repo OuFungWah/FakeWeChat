@@ -2,14 +2,17 @@ package com.crazywah.fakewechat.module.framework.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
@@ -18,6 +21,7 @@ import com.crazywah.fakewechat.common.callback.OnFragmentUpdateListener;
 import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
 import com.crazywah.fakewechat.crazytools.fragment.BaseFragment;
+import com.crazywah.fakewechat.crazytools.util.WindowSizeHelper;
 import com.crazywah.fakewechat.module.fakechat.fragment.ChatListFragment;
 import com.crazywah.fakewechat.module.fakecontacts.fragment.ContactsListFragment;
 import com.crazywah.fakewechat.module.fakediscovery.fragment.DiscoveryListFragment;
@@ -27,9 +31,6 @@ import com.crazywah.fakewechat.module.framework.reciver.MainExitReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * Created by FungWah on 2018/2/28.
@@ -76,6 +77,15 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
             return false;
         }
     });
+
+    private PopupWindow addPw;
+    private View addPopView;
+
+    private LinearLayout popGroupChatLl;
+    private LinearLayout popAddLl;
+    private LinearLayout popScanLl;
+    private LinearLayout popPayLl;
+    private LinearLayout popFeedbackLl;
 
     @Override
     protected int getLayoutId() {
@@ -126,6 +136,10 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         }
 
         fragmentPagerAdapter = new FrameworkMainAdapter(getSupportFragmentManager(), fragmentList);
+
+        //初始化弹窗
+        initPopuWindows();
+
     }
 
     @Override
@@ -141,6 +155,14 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         for (int i = 0; i < fragmentList.size(); i++) {
             cellLls[i].setOnClickListener(this);
         }
+        actionBarSearchImg.setOnClickListener(this);
+        actionBarAddImg.setOnClickListener(this);
+        //注册弹窗点击事件监听
+        popGroupChatLl.setOnClickListener(this);
+        popAddLl.setOnClickListener(this);
+        popScanLl.setOnClickListener(this);
+        popPayLl.setOnClickListener(this);
+        popFeedbackLl.setOnClickListener(this);
     }
 
     @Override
@@ -157,6 +179,19 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.mine_ll:
                 selectPage(MINE_PAGE);
+                break;
+            case R.id.actionbar_add:
+                addPw.showAsDropDown(actionBarAddImg, (int) (-360 * WindowSizeHelper.getHelper().getProporationX()), 0);
+                break;
+            case R.id.actionbar_pop_group_chat_ll:
+                break;
+            case R.id.actionbar_pop_add_ll:
+                break;
+            case R.id.actionbar_pop_scan_ll:
+                break;
+            case R.id.actionbar_pop_pay_ll:
+                break;
+            case R.id.actionbar_pop_feedback_ll:
                 break;
         }
     }
@@ -206,4 +241,20 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
         unregisterReceiver(mainExitReceiver);
         unregisterReceiver(infoUpdateRecevier);
     }
+
+    private void initPopuWindows() {
+        //初始化弹窗的视图
+        addPopView = getLayoutInflater().inflate(R.layout.popupwindow_actionbar_add, null);
+
+        //新建弹窗并绑定视图
+        addPw = new PopupWindow(addPopView, (int) (525 * WindowSizeHelper.getHelper().getProporationX()), LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+        popGroupChatLl = addPopView.findViewById(R.id.actionbar_pop_group_chat_ll);
+        popAddLl = addPopView.findViewById(R.id.actionbar_pop_add_ll);
+        popScanLl = addPopView.findViewById(R.id.actionbar_pop_scan_ll);
+        popPayLl = addPopView.findViewById(R.id.actionbar_pop_pay_ll);
+        popFeedbackLl = addPopView.findViewById(R.id.actionbar_pop_feedback_ll);
+
+    }
+
 }

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="173dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/actionbar_pop_group_chat_ll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/popupwindow_cell_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="146">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="16dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pop_group_chat" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="379">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="发起群聊"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorActionBarPopDivider" />
+
+    <LinearLayout
+        android:id="@+id/actionbar_pop_add_ll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/popupwindow_cell_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="146">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="16dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pop_add" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="379">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="添加朋友"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorActionBarPopDivider" />
+
+    <LinearLayout
+        android:id="@+id/actionbar_pop_scan_ll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/popupwindow_cell_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="146">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pop_scan" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="379">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="扫一扫"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorActionBarPopDivider" />
+
+    <LinearLayout
+        android:id="@+id/actionbar_pop_pay_ll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/popupwindow_cell_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="146">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="14dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pop_pay" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="379">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="收付款"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorActionBarPopDivider" />
+
+    <LinearLayout
+        android:id="@+id/actionbar_pop_feedback_ll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/popupwindow_cell_bg"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="146">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="14dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pop_feedback" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="379">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="帮助与反馈"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

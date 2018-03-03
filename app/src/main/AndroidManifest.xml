@@ -143,6 +143,7 @@
             android:name=".module.fakemine.activity.MineUserInfoActivity"
             android:launchMode="singleTask" />
         <activity android:name=".module.fakemine.activity.ModifyNickNameActivity" />
+        <activity android:name=".module.framework.activity.AddFriendActivity" />
 
     </application>
 
