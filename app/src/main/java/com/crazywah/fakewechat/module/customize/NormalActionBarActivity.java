@@ -30,7 +30,7 @@ public abstract class NormalActionBarActivity extends BaseActivity {
         actionbarSecondIconImg = findView(R.id.actionbar_second_icon_img);
         actionRightBtn = findView(R.id.actionbar_right_btn);
 
-        defineActionBar(actionbarBackImg, actionbarTitleTv, actionbarFirstIconImg, actionbarSecondIconImg,actionRightBtn);
+        defineActionBar(actionbarBackImg, actionbarTitleTv, actionbarFirstIconImg, actionbarSecondIconImg, actionRightBtn);
     }
 
     /**
@@ -41,6 +41,11 @@ public abstract class NormalActionBarActivity extends BaseActivity {
      * @param firstIconImg  已绑定的右方第一个按钮的对象
      * @param SecondIconImg 已绑定的右方第二个按钮的对象
      */
-    protected abstract void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg,Button actionRightBtn);
+    protected abstract void defineActionBar(ImageView backIconImg, TextView titleTv, ImageView firstIconImg, ImageView SecondIconImg, Button actionRightBtn);
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.move_in_from_left, R.anim.move_out_from_left);
+    }
 }

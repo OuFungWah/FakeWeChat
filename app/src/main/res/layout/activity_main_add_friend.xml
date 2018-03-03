@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundGrey"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_normal_actionbar" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingBottom="11dp"
+        android:paddingTop="11dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginLeft="12dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_search_green" />
+
+            <EditText
+                android:id="@+id/add_friend_username_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@null"
+                android:hint="对方的Fake微信号"
+                android:imeOptions="actionDone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@color/colorText"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@color/colorWeChatGreen" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="你的Fake微信号:    "
+            android:textColor="@color/colorBottomTitleText" />
+
+        <TextView
+            android:id="@+id/add_friend_username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CrazyWah"
+            android:textColor="@color/colorBottomTitleText" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/add_friend_no_user_rl"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="该用户不存在" />
+
+    </RelativeLayout>
+
+</LinearLayout>

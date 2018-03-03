@@ -186,6 +186,8 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
             case R.id.actionbar_pop_group_chat_ll:
                 break;
             case R.id.actionbar_pop_add_ll:
+                startActivityWithAnim(AddFriendActivity.class, R.anim.move_in_from_right, R.anim.move_out_from_right);
+                addPw.dismiss();
                 break;
             case R.id.actionbar_pop_scan_ll:
                 break;
@@ -226,7 +228,8 @@ public class MainFrameworkActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void startActivityWithAnim(Class c, int enterAnim, int outAnim) {
-        startActivityWithAnim(c, enterAnim, outAnim);
+        startActivity(c);
+        overridePendingTransition(enterAnim, outAnim);
     }
 
     @Override

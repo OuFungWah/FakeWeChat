@@ -12,6 +12,7 @@
     <color name="colorWeChatDarkGreen">#16a514</color>
     <color name="colorActionBarRightUnableText">#69966d</color>
     <color name="colorWeChatVeryDarkGreen">#2d6830</color>
+    <color name="colorWeChatBtnStroke">#3f823d</color>
     <color name="colorWeChatGreyGreen">#a2dca2</color>
     <color name="colorLoginDisableText">#bceeb9</color>
     <color name="colorAttentionBlue">#506195</color>
