@@ -1,6 +1,7 @@
 package com.crazywah.fakewechat.module.fakemine.activity;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,14 +30,14 @@ import com.crazywah.fakewechat.crazytools.util.PermissionUtil;
 import com.crazywah.fakewechat.crazytools.util.ToastUtil;
 import com.crazywah.fakewechat.crazytools.util.WindowSizeHelper;
 import com.crazywah.fakewechat.module.customize.NormalActionBarActivity;
-import com.crazywah.fakewechat.common.receiver.InfoUpdateRecevier;
-import com.facebook.common.time.SystemClock;
+import com.crazywah.fakewechat.module.fakemine.fragment.PickDateFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -46,7 +47,7 @@ import cn.jpush.im.api.BasicCallback;
  * Created by FungWah on 2018/3/2.
  */
 
-public class MineUserInfoActivity extends NormalActionBarActivity implements View.OnClickListener {
+public class MineUserInfoActivity extends NormalActionBarActivity implements View.OnClickListener, PickDateFragment.OnGetDateListener {
 
     private static final String TAG = "MineUserInfoActivity";
 
@@ -66,19 +67,28 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
     private RelativeLayout nicknameRl;
     private RelativeLayout usernameRl;
     private RelativeLayout genderRl;
-    private RelativeLayout addressRl;
+    private RelativeLayout telRl;
+    private RelativeLayout birthdayRl;
+    private RelativeLayout regionRl;
+    private RelativeLayout signatureRl;
 
     private TextView nicknameTv;
     private TextView usernameTv;
     private TextView genderTv;
+    private TextView telTv;
+    private TextView birthdayTv;
     private TextView regionTv;
+    private TextView signatureTv;
 
     private SimpleDraweeView avatarSdv;
 
     private String nicknameStr;
     private String usernameStr;
     private String genderStr;
+    private String telStr;
+    private String birthdayStr;
     private String regionStr;
+    private String signatureStr;
 
     private Dialog genderDialog;
     private View genderDialogView;
@@ -98,6 +108,8 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
     private File destination;
     private Uri imageUri;
     private Bitmap bitmap;
+
+    private PickDateFragment pickDateFragment;
 
     private boolean isUploadingAvatar = false;
 
@@ -128,14 +140,20 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         nicknameRl = findView(R.id.userinfo_nickname_rl);
         usernameRl = findView(R.id.userinfo_username_rl);
         genderRl = findView(R.id.userinfo_gender_rl);
-        addressRl = findView(R.id.userinfo_region_rl);
+        telRl = findView(R.id.userinfo_tel_rl);
+        birthdayRl = findView(R.id.userinfo_birthday_rl);
+        regionRl = findView(R.id.userinfo_region_rl);
+        signatureRl = findView(R.id.userinfo_signature_rl);
 
         avatarSdv = findView(R.id.userinfo_avatar_sdv);
 
         nicknameTv = findView(R.id.userinfo_nickname_tv);
         usernameTv = findView(R.id.userinfo_username_tv);
         genderTv = findView(R.id.userinfo_gender_tv);
+        telTv = findView(R.id.userinfo_tel_tv);
+        birthdayTv = findView(R.id.userinfo_birthday_tv);
         regionTv = findView(R.id.userinfo_region_tv);
+        signatureTv = findView(R.id.userinfo_signature_tv);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(AppConfig.ACTION_UPDATE_INFO);
@@ -156,6 +174,8 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
 
         takePhotoRl = avatarDialogView.findViewById(R.id.avatar_dialog_take_photo_rl);
         selectPhotoRl = avatarDialogView.findViewById(R.id.avatar_dialog_select_photo_rl);
+
+        pickDateFragment = new PickDateFragment();
     }
 
     @Override
@@ -170,11 +190,22 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         nicknameStr = (!userInfo.getNickname().equals("") ? userInfo.getNickname() : "未设置昵称");
         usernameStr = (!userInfo.getUserName().equals("") ? userInfo.getUserName() : "未设置用户名");
         genderStr = userInfo.getGender() == UserInfo.Gender.male ? "男" : userInfo.getGender() == UserInfo.Gender.female ? "女" : "未知";
+        if (userInfo.getBirthday() != 0) {
+            birthdayStr = new SimpleDateFormat("yyyy年MM月dd日").format(new Date(userInfo.getBirthday()));
+        } else {
+            birthdayStr = "生日未设置";
+        }
+        telStr = userInfo.getExtra("telephone");
         regionStr = (!userInfo.getRegion().equals("") ? userInfo.getRegion() : "未设置地区");
+        signatureStr = (!userInfo.getSignature().equals("") ? userInfo.getSignature() : "未设置个性签名");
+
         nicknameTv.setText(nicknameStr);
         usernameTv.setText(usernameStr);
         genderTv.setText(genderStr);
+        telTv.setText(telStr);
+        birthdayTv.setText(birthdayStr);
         regionTv.setText(regionStr);
+        signatureTv.setText(signatureStr);
 
         genderDialog.setContentView(genderDialogView, new ViewGroup.LayoutParams((int) (870 * WindowSizeHelper.getHelper().getProporationX()), (int) (510 * WindowSizeHelper.getHelper().getProporationY())));
         genderDialog.getWindow().setGravity(Gravity.CENTER);
@@ -193,13 +224,18 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         nicknameRl.setOnClickListener(this);
         usernameRl.setOnClickListener(this);
         genderRl.setOnClickListener(this);
-        addressRl.setOnClickListener(this);
+        telRl.setOnClickListener(this);
+        birthdayRl.setOnClickListener(this);
+        regionRl.setOnClickListener(this);
+        signatureRl.setOnClickListener(this);
 
         maleRl.setOnClickListener(this);
         femaleRl.setOnClickListener(this);
 
         takePhotoRl.setOnClickListener(this);
         selectPhotoRl.setOnClickListener(this);
+
+        pickDateFragment.setOnGetDateListener(this);
     }
 
     @Override
@@ -236,9 +272,18 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
                 break;
             case R.id.userinfo_gender_rl:
                 genderDialog.show();
-
+                break;
+            case R.id.userinfo_tel_rl:
+                startActivityWithAnim(ModifyTelephoneActivity.class, R.anim.move_in_from_right, R.anim.move_out_from_right);
+                break;
+            case R.id.userinfo_birthday_rl:
+                pickDateFragment.show(getSupportFragmentManager(), "timePicker");
                 break;
             case R.id.userinfo_region_rl:
+                startActivityWithAnim(ModifyRegionActivity.class, R.anim.move_in_from_right, R.anim.move_out_from_right);
+                break;
+            case R.id.userinfo_signature_rl:
+                startActivityWithAnim(ModifySignatureActivity.class, R.anim.move_in_from_right, R.anim.move_out_from_right);
                 break;
             case R.id.dialog_male_rl:
                 updateGender(UserInfo.Gender.male);
@@ -411,8 +456,27 @@ public class MineUserInfoActivity extends NormalActionBarActivity implements Vie
         }
     }
 
-    private void uploadAvatar(){
+    private void uploadAvatar() {
 
     }
 
+    @Override
+    public void onGetDate(Date date) {
+        userInfo.setBirthday(date.getTime());
+        JMessageClient.updateMyInfo(UserInfo.Field.birthday, userInfo, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.d(TAG, "gotResult: code = " + i);
+                Log.d(TAG, "gotResult: 修改生日结果 ： " + s);
+                if (s.equals("Success")) {
+                    ToastUtil.showShort("修改生日成功");
+                    Intent intent = new Intent();
+                    intent.setAction(AppConfig.ACTION_UPDATE_INFO);
+                    sendBroadcast(intent);
+                } else {
+                    ToastUtil.showShort("修改生日失败");
+                }
+            }
+        });
+    }
 }

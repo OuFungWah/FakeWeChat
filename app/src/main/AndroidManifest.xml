@@ -145,6 +145,9 @@
         <activity android:name=".module.fakemine.activity.ModifyNickNameActivity" />
         <activity android:name=".module.framework.activity.AddFriendActivity" />
         <activity android:name=".module.framework.activity.UserDetailActivity" />
+        <activity android:name=".module.fakemine.activity.ModifyRegionActivity" />
+        <activity android:name=".module.fakemine.activity.ModifyTelephoneActivity" />
+        <activity android:name=".module.fakemine.activity.ModifySignatureActivity" />
 
     </application>
 

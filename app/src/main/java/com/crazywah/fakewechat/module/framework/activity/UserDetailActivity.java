@@ -1,5 +1,6 @@
 package com.crazywah.fakewechat.module.framework.activity;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -109,25 +110,43 @@ public class UserDetailActivity extends NormalActionBarActivity implements View.
     @Override
     protected void setView() {
         if (targetUserInfo != null) {
+            //设置用户名
             usernameTv.setText(targetUserInfo.getUserName());
+            //设置备注名
             notenameTv.setText(targetUserInfo.getNotename());
+            //设置昵称
             nicknameTv.setText(targetUserInfo.getNickname());
+            //设置性别图标
             if (targetUserInfo.getGender() == UserInfo.Gender.unknown) {
                 genderImg.setVisibility(View.GONE);
             } else {
                 genderImg.setImageResource(targetUserInfo.getGender() == UserInfo.Gender.male ? R.drawable.ic_male : R.drawable.ic_female);
             }
+            //设置头像
+            avatarSdv.setImageURI(Uri.fromFile(targetUserInfo.getAvatarFile()));
+            //设置电话号码
             telTv.setText(targetUserInfo.getExtra("telephone"));
+            //设置地区
             regionTv.setText(targetUserInfo.getRegion());
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-            birthdayTv.setText(simpleDateFormat.format(new Date(targetUserInfo.getBirthday())));
+            long birthdayTime = targetUserInfo.getBirthday();
+            if (birthdayTime != 0) {
+                //设置生日日期
+                birthdayTv.setText(simpleDateFormat.format(new Date(birthdayTime)));
+            }
+            //设置个性签名
             signatureTv.setText(targetUserInfo.getSignature());
             if (targetUserInfo.getUserName().equals(JMessageClient.getMyInfo().getUserName())) {
+                //如果是自己
+                telLl.setVisibility(View.VISIBLE);
+                birthdayRl.setVisibility(View.VISIBLE);
                 addBtn.setVisibility(View.GONE);
                 sendBtn.setVisibility(View.GONE);
                 nicknameLl.setVisibility(View.GONE);
                 notenameTv.setText(targetUserInfo.getNickname());
             } else if (targetUserInfo.isFriend()) {
+                //如果是朋友
                 if (targetUserInfo.getNotename() == null || targetUserInfo.getNotename().equals("")) {
                     notenameTv.setText(targetUserInfo.getNickname());
                 }
@@ -136,9 +155,9 @@ public class UserDetailActivity extends NormalActionBarActivity implements View.
                 addBtn.setVisibility(View.GONE);
                 sendBtn.setVisibility(View.VISIBLE);
             } else {
+                //如果是陌生人
                 notenameTv.setText(targetUserInfo.getNickname());
                 nicknameLl.setVisibility(View.GONE);
-                telLl.setVisibility(View.GONE);
                 addBtn.setVisibility(View.VISIBLE);
                 sendBtn.setVisibility(View.GONE);
             }
