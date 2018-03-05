@@ -117,7 +117,6 @@
                     <!--新联系人红点-->
                     <RelativeLayout
                         android:id="@+id/contacts_red_dot_rl"
-
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_alignParentRight="true"

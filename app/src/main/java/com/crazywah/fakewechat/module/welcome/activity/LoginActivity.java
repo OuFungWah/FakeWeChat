@@ -1,5 +1,9 @@
 package com.crazywah.fakewechat.module.welcome.activity;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -9,12 +13,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
+import com.crazywah.fakewechat.common.AppConfig;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
 import com.crazywah.fakewechat.crazytools.util.SPUtil;
 import com.crazywah.fakewechat.module.framework.activity.MainFrameworkActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import cn.jpush.im.android.api.ContactManager;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 /**
@@ -38,6 +46,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private String usernameStr = "";
     private String passwordStr = "";
+
+    // 获取头像失败，极光需要登录才可以获取用户信息
+//    private Handler handler = new Handler(new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message msg) {
+//            JMessageClient.getUserInfo(usernameStr, null, new GetUserInfoCallback() {
+//                @Override
+//                public void gotResult(int i, String s, UserInfo userInfo) {
+//                    Log.d(TAG, "gotResult: 获取登录头像 :" + s);
+//                    avatarSdv.setImageURI(Uri.fromFile(userInfo.getAvatarFile()));
+//                }
+//            });
+//            return false;
+//        }
+//    });
 
     @Override
     protected int getLayoutId() {
@@ -102,6 +125,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void afterTextChanged(Editable s) {
         usernameStr = usernameEt.getText().toString();
+//        if (usernameEt.isFocused()) {
+//            handler.sendEmptyMessage(0);
+//        }
         passwordStr = passwordEt.getText().toString();
         loginBtn.setEnabled(checkMessageEnable());
     }
@@ -154,8 +180,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 if (s.equals("")) {
                     Log.d(TAG, "gotResult: 登陆成功");
                     try {
-                        SPUtil.getInstance("userInfo").putString("username",usernameStr);
-                        SPUtil.getInstance("userInfo").putString("password",passwordStr);
+                        SPUtil.getInstance("userInfo").putString("username", usernameStr);
+                        SPUtil.getInstance("userInfo").putString("password", passwordStr);
+                        JMessageClient.getMyInfo().getAvatar();
+                        JMessageClient.getMyInfo().getNickname();
                         startActivity(MainFrameworkActivity.class);
                         finish();
                     } catch (Exception e) {

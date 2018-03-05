@@ -14,6 +14,7 @@ import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
 
@@ -196,6 +197,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void register() {
         RegisterOptionalUserInfo registerOptionalUserInfo = new RegisterOptionalUserInfo();
+        registerOptionalUserInfo.setNickname(usernameStr);
         JMessageClient.register(usernameStr, passwordStr, registerOptionalUserInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -206,7 +208,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     finish();
                 }
                 if (s.equals("Invalid username.")) {
-                    showTips(usernameTipsTv,"用户名只允许6~10位数字与英文字母组合");
+                    showTips(usernameTipsTv, "用户名只允许6~10位数字与英文字母组合");
                 }
             }
         });

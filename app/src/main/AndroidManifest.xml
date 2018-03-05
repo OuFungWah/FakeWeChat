@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
@@ -148,6 +149,7 @@
         <activity android:name=".module.fakemine.activity.ModifyRegionActivity" />
         <activity android:name=".module.fakemine.activity.ModifyTelephoneActivity" />
         <activity android:name=".module.fakemine.activity.ModifySignatureActivity" />
+        <activity android:name=".module.fakecontacts.activity.ContactNewFriendActivity" />
 
     </application>
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/menu_list_ll_bg"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/contact_new_friend_avatar_sdv"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                app:placeholderImage="@drawable/avatar_def" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contact_new_friend_nickname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nickname"
+                    android:textColor="@color/colorText" />
+
+                <TextView
+                    android:id="@+id/contact_new_friend_note_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="哈哈哈"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/contact_new_friend_accept_btn"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/normal_wechat_btn_bg"
+            android:clickable="true"
+            android:text="接受"
+            android:textColor="@color/colorLoginDisableText" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@color/colorMineDivider" />
+
+</LinearLayout>

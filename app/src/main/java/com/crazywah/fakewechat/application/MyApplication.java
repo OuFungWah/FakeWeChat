@@ -2,6 +2,7 @@ package com.crazywah.fakewechat.application;
 
 import android.app.Application;
 
+import com.crazywah.fakewechat.common.util.DataToFileUtil;
 import com.crazywah.fakewechat.crazytools.util.SPUtil;
 import com.crazywah.fakewechat.crazytools.util.ToastUtil;
 import com.crazywah.fakewechat.crazytools.util.WindowSizeHelper;
@@ -19,6 +20,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DataToFileUtil.init(this);
         ToastUtil.init(this);
         SPUtil.init(this);
         WindowSizeHelper.init(this);

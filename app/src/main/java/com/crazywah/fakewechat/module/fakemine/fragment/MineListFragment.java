@@ -2,6 +2,8 @@ package com.crazywah.fakewechat.module.fakemine.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +17,8 @@ import com.crazywah.fakewechat.module.fakemine.activity.MineUserInfoActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.event.MyInfoUpdatedEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 
 /**
@@ -22,6 +26,10 @@ import cn.jpush.im.android.api.model.UserInfo;
  */
 
 public class MineListFragment extends BaseFragment implements View.OnClickListener, OnFragmentUpdateListener {
+
+    private static final String TAG = "MineListFragment";
+
+    private static final int UPDATE_INFO = 0;
 
     private LinearLayout userInfoLl;
     private LinearLayout walletLl;
@@ -39,6 +47,18 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
 
     private InfoUpdateRecevier infoUpdateRecevier;
 
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case UPDATE_INFO:
+                    setView();
+                    break;
+            }
+            return false;
+        }
+    });
+
     @Override
     protected int setLayoutId() {
         return R.layout.fragment_mine_list;
@@ -46,6 +66,8 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView(View parent) {
+
+        JMessageClient.registerEventReceiver(this);
 
         userInfo = JMessageClient.getMyInfo();
 
@@ -62,6 +84,14 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
         usernameTv = findView(R.id.mine_username_tv);
 
         infoUpdateRecevier = new InfoUpdateRecevier();
+
+        JMessageClient.getUserInfo(userInfo.getUserName(), new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                MineListFragment.this.userInfo = userInfo;
+                handler.sendEmptyMessage(UPDATE_INFO);
+            }
+        });
 
     }
 
@@ -119,6 +149,12 @@ public class MineListFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onFragmentUpdate(Intent intent) {
         userInfo = JMessageClient.getMyInfo();
-        setView();
+        handler.sendEmptyMessage(UPDATE_INFO);
     }
+
+    public void onEvent(MyInfoUpdatedEvent event) {
+        userInfo = event.getMyInfo();
+        handler.sendEmptyMessage(UPDATE_INFO);
+    }
+
 }

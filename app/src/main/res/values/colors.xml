@@ -29,4 +29,7 @@
     <color name="closeDialogStorkColor">#d8d2d4</color>
     <color name="closeDialogBackground">#45000000</color>
 
+    <color name="colorContactHeadText">#888888</color>
+    <color name="colorContactHeadBg">#ebebeb</color>
+
 </resources>

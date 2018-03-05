@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:state_pressed="false">
+        <shape>
+            <solid android:color="@color/colorContactHeadText" />
+            <stroke android:width="1dp" android:color="@color/colorBottomTitleText" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
     <item android:state_enabled="true" android:state_pressed="false">
         <shape>
             <solid android:color="#1aac19" />

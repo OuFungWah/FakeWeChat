@@ -4,11 +4,194 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundGrey">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="CONTACTS"
-        android:textSize="25sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/contact_new_friend_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/menu_list_ll_bg"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/ic_contact_new_friend" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:text="新Fake朋友"
+                        android:textColor="@color/colorText" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <RelativeLayout
+                            android:id="@+id/contact_new_friend_request_rl"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/red_point_11dp_bg"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/contact_new_friend_request_num_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:maxLength="2"
+                                android:singleLine="true"
+                                android:text="19"
+                                android:textColor="@android:color/white" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/colorMineDivider" />
+
+                <LinearLayout
+                    android:id="@+id/contact_group_chat_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/menu_list_ll_bg"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/ic_contact_group_chat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:text="群聊"
+                        android:textColor="@color/colorText" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/colorMineDivider" />
+
+                <LinearLayout
+                    android:id="@+id/contact_tag_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/menu_list_ll_bg"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/ic_contact_tag" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:text="标签"
+                        android:textColor="@color/colorText" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@color/colorMineDivider" />
+
+                <LinearLayout
+                    android:id="@+id/contact_subscription_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/menu_list_ll_bg"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/ic_contact_subscription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:text="公众号"
+                        android:textColor="@color/colorText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:text="没朋友？快去添加一个吧！" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/contact_list_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="18dp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

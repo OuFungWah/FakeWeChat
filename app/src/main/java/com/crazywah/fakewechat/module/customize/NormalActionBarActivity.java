@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.crazywah.fakewechat.R;
 import com.crazywah.fakewechat.crazytools.activity.BaseActivity;
+import com.crazywah.fakewechat.module.framework.activity.MainFrameworkActivity;
 
 /**
  * Created by FungWah on 2018/3/1.
@@ -45,7 +46,7 @@ public abstract class NormalActionBarActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.move_in_from_left, R.anim.move_out_from_left);
+        startActivityWithAnim(MainFrameworkActivity.class, R.anim.move_in_from_left, R.anim.move_out_from_left);
+        finish();
     }
 }
